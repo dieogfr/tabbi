@@ -1,8 +1,10 @@
-const defaultSettings = {
+export const defaultSettings = {
   animations: { value: true, type: "checkbox" },
   boxbg: { value: true, type: "checkbox" },
   compact: { value: false, type: "checkbox" },
-  font: { value: "monospace", type: "text" },
+  font: { value: "sans-serif", type: "text" },
+  itemsPerColumn: { value: 8, type: "number" },
+  background: { value: "oklch(10% 0 0)", type: "text" },
 };
 
 const initializeOptions = () => {

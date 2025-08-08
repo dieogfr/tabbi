@@ -43,6 +43,22 @@
               <input type="text" name="font" id="font" />
             </div>
           </div>
+          <div class="option-item">
+            <div class="option-description">
+              <div class="option-title">Bookmarks per column</div>
+              <div class="option-subtitle">Select the max number of boxes you want to display per column</div>
+            </div>
+            <input type="number" name="itemsPerColumn" id="itemsPerColumn" min="1" max="32" />
+          </div>
+          <div class="option-item" style="flex-direction: column">
+            <div class="option-description">
+              <div class="option-title">Background</div>
+              <div class="option-subtitle">Use a link to an image or any color code format (e.g. #000000)</div>
+            </div>
+            <div class="input-wrapper">
+              <input type="text" name="background" id="background" placeholder="Color o URL" />
+            </div>
+          </div>
         </div>
         <div class="options-group">
           <h2 class="options-title">Performance</h2>
@@ -62,6 +78,6 @@
         </div>
       </main>
     </div>
-    <script src="js/options.js"></script>
+    <script type="module" src="js/options.js"></script>
   </body>
 </html>

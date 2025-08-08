@@ -1,3 +1,5 @@
+import { defaultSettings } from "./options.js";
+
 const BOOKMARKS_FOLDER_NAME = "Tabbi";
 const ANIMATION_DELAY_INCREMENT = 50;
 
@@ -9,10 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
 const initializeUI = (container) => {
   chrome.storage.sync.get(
     {
-      animations: true,
-      boxbg: true,
-      compact: false,
-      font: "monospace",
+      animations: defaultSettings.animations.value,
+      boxbg: defaultSettings.boxbg.value,
+      compact: defaultSettings.compact.value,
+      font: defaultSettings.font.value,
+      itemsPerColumn: defaultSettings.itemsPerColumn.value,
+      background: defaultSettings.background.value,
     },
     (settings) => {
       try {
@@ -28,6 +32,24 @@ const initializeUI = (container) => {
 const applyUISettings = (settings, container) => {
   document.body.setAttribute("data-animate", settings.animations);
   document.body.style.setProperty("--font", settings.font);
+  document.body.style.setProperty("--items-per-column", settings.itemsPerColumn);
+
+  if ((window.innerWidth - 32) / settings.itemsPerColumn > 200) {
+    document.body.style.setProperty("--box-size", "200px");
+  } else {
+    // main padding (16px each side) & grid gap (var(--grid-gap)) for each box (boxes - 1)
+    document.body.style.setProperty(
+      "--box-size",
+      `clamp(120px, calc((100vw - (16px * 2) - var(--grid-gap) * (${settings.itemsPerColumn} - 1)) / ${settings.itemsPerColumn}), 200px)`
+    );
+  }
+
+  if (settings.background.startsWith("http")) {
+    document.body.style.backgroundImage = `url(${settings.background})`;
+  } else {
+    document.body.style.backgroundColor = settings.background;
+  }
+
   container.setAttribute("data-compact", settings.compact);
 };
 
@@ -103,7 +125,9 @@ const createBookmarkLink = (bookmark, delay, showBackground) => {
   if (!bookmark?.url) return null;
 
   const link = document.createElement("a");
-  const faviconUrl = `https://www.google.com/s2/favicons?domain=${encodeURIComponent(new URL(bookmark.url).hostname)}&sz=32`;
+  const faviconUrl = `https://www.google.com/s2/favicons?domain=${encodeURIComponent(
+    new URL(bookmark.url).hostname
+  )}&sz=32`;
   const safeTitle = bookmark.title || new URL(bookmark.url).hostname;
 
   link.href = bookmark.url;
