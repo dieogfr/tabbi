@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Options | Tabbi</title>
+    <link rel="stylesheet" href="css/options.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <a href="/options.html" target="_blank">Open in a new tab</a>
+      </header>
+      <main>
+        <div class="options-group">
+          <h2 class="options-title">Appearance</h2>
+          <div class="option-item">
+            <div class="option-description">
+              <div class="option-title">Bookmark background</div>
+              <div class="option-subtitle">Displays a colored background based in the bookmark icon</div>
+            </div>
+            <input type="checkbox" name="boxbg" id="boxbg" />
+            <label for="boxbg" class="switch">
+              <span data-state="unchecked"></span>
+            </label>
+          </div>
+          <div class="option-item">
+            <div class="option-description">
+              <div class="option-title">Compact mode</div>
+              <div class="option-subtitle">Reduce bookmarks size for a denser layout</div>
+            </div>
+            <input type="checkbox" name="compact" id="compact" />
+            <label for="compact" class="switch">
+              <span data-state="unchecked"></span>
+            </label>
+          </div>
+          <div class="option-item" style="flex-direction: column">
+            <div class="option-description">
+              <div class="option-title">Font</div>
+              <div class="option-subtitle">Enter a locally installed font</div>
+            </div>
+            <div class="input-wrapper">
+              <input type="text" name="font" id="font" />
+            </div>
+          </div>
+        </div>
+        <div class="options-group">
+          <h2 class="options-title">Performance</h2>
+          <div class="option-item">
+            <div class="option-description">
+              <div class="option-title">Enable animations</div>
+              <div class="option-subtitle">Makes a soft animation when displaying elements</div>
+            </div>
+            <input type="checkbox" name="animations" id="animations" />
+            <label for="animations" class="switch">
+              <span data-state="unchecked"></span>
+            </label>
+          </div>
+        </div>
+        <div class="actions">
+          <button id="reset" class="btn">Reset options</button>
+        </div>
+      </main>
+    </div>
+    <script src="js/options.js"></script>
+  </body>
+</html>
