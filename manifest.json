@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "tabbi",
+  "version": "1.0",
+  "description": "A minimal new tab with your chosen bookmarks. Clean and simple.",
+  "author": "dieogfr",
+  "permissions": ["bookmarks", "storage"],
+  "action": {
+    "default_popup": "options.html"
+  },
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "icons": {
+    "32": "images/icons/32w.png",
+    "180": "images/icons/180w.png",
+    "512": "images/icons/512w.png"
+  }
+}

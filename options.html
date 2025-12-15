@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Options — tabbi</title>
+    <link rel="stylesheet" href="css/options.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <a href="/options.html" target="_blank">Open in a new tab</a>
+      </header>
+      <main>
+        <div class="options-group">
+          <h2 class="options-title">Appearance</h2>
+          <div class="option-item">
+            <div class="option-description">
+              <div class="option-title">Show Icons</div>
+              <div class="option-subtitle">
+                Display favicon icons next to bookmark titles
+              </div>
+            </div>
+            <input type="checkbox" name="showIcons" id="showIcons" />
+            <label for="showIcons" class="switch">
+              <span data-state="unchecked"></span>
+            </label>
+          </div>
+          <div class="option-item">
+            <div class="option-description">
+              <div class="option-title">Bookmark background</div>
+              <div class="option-subtitle">
+                Displays a colored background based in the bookmark icon
+              </div>
+            </div>
+            <input type="checkbox" name="boxbg" id="boxbg" />
+            <label for="boxbg" class="switch">
+              <span data-state="unchecked"></span>
+            </label>
+          </div>
+          <div class="option-item">
+            <div class="option-description">
+              <div class="option-title">Compact mode</div>
+              <div class="option-subtitle">
+                Reduce bookmarks size for a denser layout
+              </div>
+            </div>
+            <input type="checkbox" name="compact" id="compact" />
+            <label for="compact" class="switch">
+              <span data-state="unchecked"></span>
+            </label>
+          </div>
+          <div class="option-item">
+            <div class="option-description">
+              <div class="option-title">Bookmarks per column</div>
+              <div class="option-subtitle">
+                Select the max number of boxes you want to display per column
+              </div>
+            </div>
+            <input
+              type="number"
+              name="itemsPerColumn"
+              id="itemsPerColumn"
+              min="1"
+              max="32"
+            />
+          </div>
+          <div class="option-item" style="flex-direction: column">
+            <div class="option-description">
+              <div class="option-title">Background</div>
+              <div class="option-subtitle">
+                Use any color code format (e.g. "#000000", "oklch(15% 0 0)") or
+                an image URL
+              </div>
+            </div>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                name="background"
+                id="background"
+                placeholder="Color code"
+              />
+            </div>
+          </div>
+          <div class="option-item" style="flex-direction: column">
+            <div class="option-description">
+              <div class="option-title">Bookmark Folder</div>
+              <div class="option-subtitle">
+                The name of the bookmark folder to display (default: tabbi)
+              </div>
+            </div>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                name="bookmarkFolder"
+                id="bookmarkFolder"
+                placeholder="Folder name"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <button id="reset" class="btn">Reset options</button>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="js/options.js"></script>
+  </body>
+</html>

@@ -1,0 +1,172 @@
+@font-face {
+  font-display: swap;
+  font-family: "Noto Sans Mono";
+  font-style: normal;
+  font-weight: 100 900;
+  src: url("../fonts/NotoSansMono.ttf") format("truetype");
+}
+
+:root {
+  --black: oklch(0% 0 0);
+  --gray: oklch(50% 0 0);
+  --white: oklch(100% 0 0);
+  --box-border: oklch(100% 0 0 / 0.1);
+  --grid-gap: 0.5rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--gray);
+  font:
+    400 1rem "Noto Sans Mono",
+    monospace;
+  height: 100vh;
+  overflow: hidden;
+  width: 100vw;
+}
+
+img,
+svg {
+  pointer-events: none;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--grid-gap);
+  height: 100vh;
+  overflow-y: scroll;
+  padding: 1rem;
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  width: 100vw;
+}
+
+.grid {
+  contain-intrinsic-size: 1px 1000px;
+  content-visibility: auto;
+  display: grid;
+  gap: var(--grid-gap);
+  grid-column-start: 1;
+  grid-row-start: 1;
+  grid-template-columns: repeat(var(--items-per-column), minmax(0, 1fr));
+  width: fit-content;
+}
+
+.grid:empty {
+  display: none;
+}
+
+.box {
+  /* TODO: fix animation and make it interactive */
+  /* animation: fadeIn .3s backwards; */
+  aspect-ratio: 1 / 1;
+  background-color: rgba(10, 10, 10, 0.5);
+  border: 1.5px solid var(--box-border);
+  border-radius: 0.5rem;
+  color: var(--white);
+  corner-shape: squircle;
+  display: flex;
+  flex-direction: column;
+  height: var(--box-size);
+  overflow: hidden;
+  padding: 1rem;
+  position: relative;
+  text-decoration: none;
+  width: var(--box-size);
+}
+
+.box:hover {
+  background-color: oklch(100% 0 0 / 0.1);
+  transition: background-color 150ms ease;
+}
+
+.background {
+  background-position: center;
+  background-size: cover;
+  filter: blur(50px);
+  inset: 0;
+  opacity: 0.3;
+  overflow: hidden;
+  position: absolute;
+  transform: translateZ(0);
+  z-index: -1;
+}
+
+.background-image {
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+  width: 100%;
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.title {
+  font-size: 0.875rem;
+  font-weight: 450;
+  letter-spacing: -0.025rem;
+  line-clamp: 1;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: pretty;
+  white-space: nowrap;
+}
+
+.icon {
+  border-radius: 4px;
+  height: 16px;
+  width: 16px;
+}
+
+[data-compact="true"] .grid {
+  grid-auto-rows: unset;
+}
+
+[data-compact="true"] .box {
+  aspect-ratio: 4 / 1;
+  height: calc(var(--box-size) / 4);
+  justify-content: center;
+}
+
+[data-compact="true"] .background {
+  height: 200%;
+}
+
+.no-bookmarks {
+  color: var(--white);
+  font-size: 0.875rem;
+  margin: auto;
+  text-align: center;
+  width: fit-content;
+}
+
+@keyframes fadeIn {
+  from {
+    filter: blur(4px);
+    opacity: 0;
+    transform: translateY(3vh);
+  }
+
+  to {
+    filter: blur(0);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
