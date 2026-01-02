@@ -3,7 +3,7 @@
 A minimal new tab replacement for Chromium-based browsers that displays your bookmarks in a clean, customizable layout.
 
 ![tabbi Screenshot](images/assets/preview.jpeg)
-_Reference image, you can modify the layout to your liking_
+_Reference image. Final result may vary._
 
 ## Features
 
@@ -37,7 +37,7 @@ Press extension icon in your browser to customize options.
 
 ## Ethics
 
-tabbi is built for personal use and aesthetic simplicity. 
+**tabbi** is built for personal use and aesthetic simplicity.
 It does not track, store, or transmit any user data.
 
 ## License

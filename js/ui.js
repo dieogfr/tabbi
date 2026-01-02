@@ -1,27 +1,21 @@
 export const applyUISettings = (settings, container) => {
-  document.body.style.setProperty(
-    "--items-per-column",
-    settings.itemsPerColumn,
-  );
-
-  const boxSize =
-    (window.innerWidth - 32) / settings.itemsPerColumn > 200
-      ? "200px"
-      : `clamp(120px, calc((100vw - 32px - var(--grid-gap) * (${settings.itemsPerColumn} - 1)) / ${settings.itemsPerColumn}), 200px)`;
-
-  document.body.style.setProperty("--box-size", boxSize);
+  document.body.style.setProperty("--items-per-column", settings.itemsPerColumn);
+  updateBoxSize(settings.itemsPerColumn);
   document.body.style.backgroundColor = settings.background;
 
   container.setAttribute("data-compact", settings.compact);
 };
 
-export const renderBookmarks = (
-  nodes,
-  container,
-  folderName,
-  showBackground,
-  showIcons,
-) => {
+export const updateBoxSize = (itemsPerColumn) => {
+  const boxSize =
+    (window.innerWidth - 32) / itemsPerColumn > 200
+      ? "200px"
+      : `clamp(120px, calc((100vw - 32px - var(--grid-gap) * (${itemsPerColumn} - 1)) / ${itemsPerColumn}), 200px)`;
+
+  document.body.style.setProperty("--box-size", boxSize);
+};
+
+export const renderBookmarks = (nodes, container, folderName, showBackground, showIcons) => {
   if (!nodes?.length) return;
 
   const folderDiv = document.createElement("div");

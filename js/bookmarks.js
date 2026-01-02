@@ -31,6 +31,6 @@ export const groupBookmarks = (nodes) => {
       }
       return groups;
     },
-    { _parent: [] },
+    { _parent: [] }
   );
 };

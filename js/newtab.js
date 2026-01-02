@@ -4,11 +4,18 @@ import {
   applyUISettings,
   displayNoBookmarksMessage,
   renderBookmarks,
+  updateBoxSize,
 } from "./ui.js";
+
+let currentItemsPerColumn = defaultSettings.itemsPerColumn.value;
 
 document.addEventListener("DOMContentLoaded", () => {
   const bookmarksContainer = document.getElementById("bookmarks");
   initializeUI(bookmarksContainer);
+
+  window.addEventListener("resize", () => {
+    updateBoxSize(currentItemsPerColumn);
+  });
 });
 
 const initializeUI = (container) => {
@@ -23,12 +30,13 @@ const initializeUI = (container) => {
     },
     async (settings) => {
       try {
+        currentItemsPerColumn = settings.itemsPerColumn;
         applyUISettings(settings, container);
         await loadBookmarks(container, settings);
       } catch (error) {
         console.error("Error applying settings:", error);
       }
-    },
+    }
   );
 };
 
@@ -42,12 +50,6 @@ const loadBookmarks = async (container, settings) => {
 
   const groupedBookmarks = groupBookmarks(targetFolder.children);
   Object.entries(groupedBookmarks).forEach(([groupName, bookmarkItems]) => {
-    renderBookmarks(
-      bookmarkItems,
-      container,
-      groupName,
-      settings.boxbg,
-      settings.showIcons,
-    );
+    renderBookmarks(bookmarkItems, container, groupName, settings.boxbg, settings.showIcons);
   });
 };

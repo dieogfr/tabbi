@@ -9,17 +9,13 @@ export const defaultSettings = {
 
 const initializeOptions = () => {
   const elements = Object.fromEntries(
-    Object.keys(defaultSettings).map((key) => [
-      key,
-      document.getElementById(key),
-    ]),
+    Object.keys(defaultSettings).map((key) => [key, document.getElementById(key)])
   );
   elements.reset = document.getElementById("reset");
   return elements;
 };
 
-const getOptionValue = (element, type) =>
-  type === "checkbox" ? element.checked : element.value;
+const getOptionValue = (element, type) => (type === "checkbox" ? element.checked : element.value);
 
 const setOptionValue = (element, type, value) => {
   if (!element) return;
@@ -33,7 +29,7 @@ const saveOptions = (elements) => {
       type === "number"
         ? parseInt(getOptionValue(elements[key], type), 10)
         : getOptionValue(elements[key], type),
-    ]),
+    ])
   );
 
   chrome.storage.sync.set(options);
@@ -49,7 +45,7 @@ const loadOptions = (elements) => {
 
 const resetOptions = (elements) => {
   const defaultValues = Object.fromEntries(
-    Object.entries(defaultSettings).map(([key, { value }]) => [key, value]),
+    Object.entries(defaultSettings).map(([key, { value }]) => [key, value])
   );
 
   Object.entries(defaultSettings).forEach(([key, { value, type }]) => {
