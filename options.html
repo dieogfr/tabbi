@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -18,9 +18,7 @@
           <div class="option-item">
             <div class="option-description">
               <div class="option-title">Show Icons</div>
-              <div class="option-subtitle">
-                Display favicon icons next to bookmark titles
-              </div>
+              <div class="option-subtitle">Display favicon icons next to bookmark titles</div>
             </div>
             <input type="checkbox" name="showIcons" id="showIcons" />
             <label for="showIcons" class="switch">
@@ -42,9 +40,7 @@
           <div class="option-item">
             <div class="option-description">
               <div class="option-title">Compact mode</div>
-              <div class="option-subtitle">
-                Reduce bookmarks size for a denser layout
-              </div>
+              <div class="option-subtitle">Reduce bookmarks size for a denser layout</div>
             </div>
             <input type="checkbox" name="compact" id="compact" />
             <label for="compact" class="switch">
@@ -58,30 +54,28 @@
                 Select the max number of boxes you want to display per column
               </div>
             </div>
-            <input
-              type="number"
-              name="itemsPerColumn"
-              id="itemsPerColumn"
-              min="1"
-              max="32"
-            />
+            <input type="number" name="itemsPerColumn" id="itemsPerColumn" min="1" max="32" />
           </div>
           <div class="option-item" style="flex-direction: column">
             <div class="option-description">
               <div class="option-title">Background</div>
               <div class="option-subtitle">
-                Use any color code format (e.g. "#000000", "oklch(15% 0 0)") or
-                an image URL
+                Use any color code format (e.g. "#000000", "oklch(15% 0 0)") or an image URL
               </div>
             </div>
             <div class="input-wrapper">
-              <input
-                type="text"
-                name="background"
-                id="background"
-                placeholder="Color code"
-              />
+              <input type="text" name="background" id="background" placeholder="Color code" />
             </div>
+          </div>
+          <div class="option-item">
+            <div class="option-description">
+              <div class="option-title">Background blur</div>
+              <div class="option-subtitle">Blur the background image</div>
+            </div>
+            <input type="checkbox" name="backgroundBlur" id="backgroundBlur" />
+            <label for="backgroundBlur" class="switch">
+              <span data-state="unchecked"></span>
+            </label>
           </div>
           <div class="option-item" style="flex-direction: column">
             <div class="option-description">

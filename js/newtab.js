@@ -25,6 +25,7 @@ const initializeUI = (container) => {
       compact: defaultSettings.compact.value,
       itemsPerColumn: defaultSettings.itemsPerColumn.value,
       background: defaultSettings.background.value,
+      backgroundBlur: defaultSettings.backgroundBlur.value,
       showIcons: defaultSettings.showIcons.value,
       bookmarkFolder: defaultSettings.bookmarkFolder.value,
     },
@@ -53,3 +54,21 @@ const loadBookmarks = async (container, settings) => {
     renderBookmarks(bookmarkItems, container, groupName, settings.boxbg, settings.showIcons);
   });
 };
+
+const updateDatetime = () => {
+  // format: Wednesday, January 14, 2026 10:28 PM
+  const now = new Date();
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+  const datetime = now.toLocaleString("en-US", options);
+  document.getElementById("datetime").textContent = datetime;
+};
+
+updateDatetime();
+setInterval(updateDatetime, 60000);

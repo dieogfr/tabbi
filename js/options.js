@@ -1,8 +1,9 @@
 export const defaultSettings = {
   boxbg: { value: false, type: "checkbox" },
-  compact: { value: true, type: "checkbox" },
+  compact: { value: false, type: "checkbox" },
   itemsPerColumn: { value: 8, type: "number" },
   background: { value: "oklch(15% 0 0)", type: "text" },
+  backgroundBlur: { value: false, type: "checkbox" },
   showIcons: { value: true, type: "checkbox" },
   bookmarkFolder: { value: "tabbi", type: "text" },
 };

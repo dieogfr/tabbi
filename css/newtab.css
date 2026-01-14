@@ -27,13 +27,20 @@
 
 body {
   background-color: var(--bg);
+  background-image: linear-gradient(rgba(18, 18, 18, 0.3) 0%, rgba(18, 18, 18, 0.1) 100%);
   color: var(--gray);
+  display: flex;
+  flex-direction: column;
   font:
     400 1rem "Noto Sans Mono",
     monospace;
   height: 100vh;
   overflow: hidden;
   width: 100vw;
+}
+
+body[data-blur="true"] {
+  backdrop-filter: blur(10px);
 }
 
 img,
@@ -44,6 +51,7 @@ svg {
 main {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   gap: var(--grid-gap);
   height: 100vh;
   overflow-y: scroll;
@@ -78,6 +86,7 @@ main {
   );
   background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--white);
   display: flex;
@@ -87,34 +96,34 @@ main {
   padding: 1rem;
   position: relative;
   text-decoration: none;
-  width: var(--box-size);
-}
+  transition: all 200ms ease-in-out;
+  width: var(--box-size); 
 
-.box:hover {
-  background-color: rgba(255, 255, 255, 0.25);
-  transition: background-color 200ms ease;
-}
+  &:active, &:hover, &:focus {
+    outline: none;
+  }
 
-.box:hover .title {
-  text-transform: uppercase;
-}
+  &:hover {
+    backdrop-filter: blur(28px) saturate(10);
+    background-color: rgba(255, 255, 255, 0.1);
 
-.box:active,
-.box:focus {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  outline: none;
+    .title {
+      /* text-transform: uppercase; */
+      font-weight: 600;
+    }
+  }
 }
 
 .background {
-  background-position: center;
-  background-size: cover;
-  filter: blur(28px) saturate(10) contrast(0.5);
+  border-radius: 8px;
+  filter: blur(28px) saturate(10);
+  height: 100px;
   inset: 0;
   opacity: 0.25;
   overflow: hidden;
   position: absolute;
   scale: 3.4;
-  transform: translateZ(0);
+  width: 100px;
   z-index: -1;
 }
 
@@ -169,4 +178,14 @@ main {
   margin: auto;
   text-align: center;
   width: fit-content;
+}
+
+footer {
+  bottom: 0;
+  color: var(--white);
+  font-size: 0.875rem;
+  padding: 1rem;
+  position: sticky;
+  text-align: left;
+  width: 100%;
 }

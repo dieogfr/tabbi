@@ -1,9 +1,22 @@
 export const applyUISettings = (settings, container) => {
   document.body.style.setProperty("--items-per-column", settings.itemsPerColumn);
   updateBoxSize(settings.itemsPerColumn);
-  document.body.style.backgroundColor = settings.background;
+
+  if (
+    settings.background.startsWith("#") ||
+    settings.background.startsWith("rgb") ||
+    settings.background.startsWith("oklch")
+  ) {
+    document.body.style.backgroundColor = settings.background;
+  } else {
+    document.body.style.backgroundImage = `url(${settings.background})`;
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+    document.body.style.backgroundRepeat = "no-repeat";
+  }
 
   container.setAttribute("data-compact", settings.compact);
+  document.body.setAttribute("data-blur", settings.backgroundBlur);
 };
 
 export const updateBoxSize = (itemsPerColumn) => {
