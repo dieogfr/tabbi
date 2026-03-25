@@ -12,6 +12,7 @@
   --white: oklch(100% 0 0);
   --box-border: oklch(100% 0 0 / 0.1);
   --grid-gap: 0.5rem;
+  --bg: var(--black);
 }
 
 * {
