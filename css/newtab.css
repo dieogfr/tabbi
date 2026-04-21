@@ -1,9 +1,17 @@
 @font-face {
   font-display: swap;
-  font-family: "Noto Sans Mono";
+  font-family: "Inter";
   font-style: normal;
   font-weight: 100 900;
-  src: url("../fonts/NotoSansMono.ttf") format("truetype");
+  src: url("/fonts/Inter.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Departure Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/DepartureMono-Regular.otf") format("opentype");
 }
 
 :root {
@@ -13,13 +21,15 @@
   --box-border: oklch(100% 0 0 / 0.1);
   --grid-gap: 0.5rem;
   --bg: var(--black);
+
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "Departure Mono", monospace;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  user-select: none;
 }
 
 *::-webkit-scrollbar {
@@ -28,13 +38,14 @@
 
 body {
   background-color: var(--bg);
-  background-image: linear-gradient(rgba(18, 18, 18, 0.3) 0%, rgba(18, 18, 18, 0.1) 100%);
+  background-image: linear-gradient(
+    rgba(18, 18, 18, 0.3) 0%,
+    rgba(18, 18, 18, 0.1) 100%
+  );
   color: var(--gray);
   display: flex;
   flex-direction: column;
-  font:
-    400 1rem "Noto Sans Mono",
-    monospace;
+  font: 400 1rem var(--font-sans);
   height: 100vh;
   overflow: hidden;
   width: 100vw;
@@ -98,9 +109,12 @@ main {
   position: relative;
   text-decoration: none;
   transition: all 200ms ease-in-out;
-  width: var(--box-size); 
+  user-select: none;
+  width: var(--box-size);
 
-  &:active, &:hover, &:focus {
+  &:active,
+  &:hover,
+  &:focus {
     outline: none;
   }
 
@@ -109,7 +123,6 @@ main {
     background-color: rgba(255, 255, 255, 0.1);
 
     .title {
-      /* text-transform: uppercase; */
       font-weight: 600;
     }
   }
@@ -143,8 +156,7 @@ main {
 
 .title {
   font-size: 0.875rem;
-  font-weight: 450;
-  letter-spacing: -0.025rem;
+  font-weight: 400;
   line-clamp: 1;
   line-height: 1.2;
   overflow: hidden;
@@ -184,6 +196,7 @@ main {
 footer {
   bottom: 0;
   color: var(--white);
+  font-family: var(--font-mono);
   font-size: 0.875rem;
   padding: 1rem;
   position: sticky;
