@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -19,12 +19,21 @@
     <link rel="stylesheet" href="css/newtab.css" />
   </head>
   <body>
-    <main id="bookmarks"></main>
-    <div>
-      <footer>
-        <div id="datetime"></div>
-      </footer>
-    </div>
+    <main id="bookmarks-container">
+      <div id="bookmarks" class="bookmarks-grid"></div>
+    </main>
+    <footer>
+      <div class="footer-left">
+        <div id="datetime-time" class="datetime-time"></div>
+        <div id="datetime-date" class="datetime-date"></div>
+      </div>
+      <div class="footer-right">
+        <div id="system-info" class="system-info"></div>
+        <div id="connection-status">
+          <span id="status-text">Connected</span>
+        </div>
+      </div>
+    </footer>
     <script src="js/newtab.js" type="module"></script>
   </body>
 </html>

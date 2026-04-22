@@ -1,16 +1,21 @@
+@font-face {
+  font-display: swap;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  src: url("../fonts/Inter.woff2") format("woff2");
+}
+
 :root {
-  --black: oklch(0% 0 0);
-  --gray: oklch(50% 0 0);
-  --white: oklch(100% 0 0);
-  --box-bg: oklch(20% 0 0);
-  --text-light: oklch(100% 0 0 / 0.8);
-  --toggle-bg: oklch(25% 0 0);
-  --toggle-accent: oklch(55% 0 0);
-  --button-bg: oklch(100% 0 0 / 0.045);
-  --button-bg-hover: oklch(100% 0 0 / 0.075);
-  --button-border: oklch(100% 0 0 / 0.15);
-  --popup-width: 350px;
-  --transition: 250ms cubic-bezier(0.3, 1, 0.3, 1);
+  --background: oklch(12% 0 0);
+  --surface: oklch(100% 0 0 / 0.05);
+  --foreground: oklch(98% 0 0);
+  --subtle: oklch(70% 0 0);
+  --accent: oklch(0.65 0 0);
+  --border: oklch(100% 0 0 / 0.1);
+
+  --font-sans: "Inter", system-ui;
+  --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -19,179 +24,184 @@
   padding: 0;
 }
 
-html {
-  font-size: 100%;
-}
-
 body {
-  background-color: var(--box-bg);
-  color: var(--gray);
-  font:
-    400 0.875rem system-ui,
-    sans-serif;
-  min-width: var(--popup-width);
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  min-height: 500px;
+  width: 400px;
 }
 
 .container {
-  margin: 0 auto;
-  max-width: 800px;
   padding: 1rem;
 }
 
 header {
-  display: block;
-  margin-bottom: 0.875rem;
+  display: flex;
+  margin-bottom: 1.5rem;
+  place-content: space-between;
+  place-items: center;
 }
 
-@media (min-width: 450px) {
-  header {
-    display: none;
-  }
+h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
-header a {
-  color: var(--text-light);
-  font-size: 0.875rem;
+a {
+  color: var(--accent);
+  text-underline-offset: 2px;
+  transition: text-underline-offset var(--transition);
+}
+
+a:hover {
+  text-underline-offset: 4px;
 }
 
 .options-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
   margin-bottom: 1rem;
+  overflow: hidden;
 }
 
-.options-group:last-child {
-  margin-bottom: 0;
-}
-
-.options-title {
-  color: var(--text-light);
-  font-size: 0.875rem;
+.group-header {
+  background: oklch(100% 0 0 / 0.02);
+  border-bottom: 1px solid var(--border);
+  color: var(--subtle);
+  font-size: 0.75rem;
   font-weight: 600;
-  padding-bottom: 8px;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1rem;
+  text-transform: uppercase;
 }
 
 .option-item {
-  align-items: flex-start;
+  border-bottom: 1px solid var(--border);
   display: flex;
-  gap: 0.5rem;
-  justify-content: space-between;
+  padding: 0.875rem 1rem;
+  place-content: space-between;
+  place-items: center;
+  transition: background var(--transition);
 }
 
-.option-item:has(.input-label) {
-  display: grid;
-  gap: 0 16px;
-  grid-template-columns: 1fr 2fr;
+.option-item:last-child {
+  border-bottom: none;
 }
 
-.option-description {
+.option-info {
   flex: 1;
+  padding-right: 1rem;
 }
 
 .option-title {
-  color: var(--white);
-  font-size: 0.875rem;
+  color: var(--foreground);
   font-weight: 500;
-  line-height: 1.5rem;
 }
 
 .option-subtitle {
-  color: var(--gray);
+  color: var(--subtle);
   font-size: 0.75rem;
-  line-height: 1.25rem;
-  text-wrap: pretty;
+  margin-top: 2px;
 }
 
 input[type="checkbox"] {
-  display: none;
-}
-
-.switch {
-  --toggle-size: 1rem;
-  background-color: var(--toggle-bg);
-  border: 2px solid transparent;
-  border-radius: 999px;
+  appearance: none;
+  background: oklch(100% 0 0 / 0.1);
+  border-radius: 9999px;
   cursor: pointer;
-  display: inline-flex;
-  height: calc(var(--toggle-size) + 0.25rem);
-  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  width: calc(var(--toggle-size) * 2 + 0.25rem);
-}
-
-.switch span {
-  background-color: var(--toggle-accent);
-  border-radius: 999px;
-  height: var(--toggle-size);
-  transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  width: var(--toggle-size);
-}
-
-.input-wrapper {
+  height: 24px;
   position: relative;
-  width: 100%;
+  transition: background var(--transition);
+  width: 44px;
 }
 
-input[type="checkbox"]:checked + .switch {
-  background-color: var(--white);
+input[type="checkbox"]:checked {
+  background: var(--accent);
 }
 
-input[type="checkbox"]:checked + .switch span {
-  background-color: var(--black);
-  transform: translateX(var(--toggle-size));
+input[type="checkbox"]::after {
+  content: "";
+  background: white;
+  border-radius: 9999px;
+  box-shadow: 0 2px 4px oklch(0% 0 0 / 0.2);
+  height: 20px;
+  left: 2px;
+  position: absolute;
+  top: 2px;
+  transition: transform var(--transition);
+  width: 20px;
+}
+
+input[type="checkbox"]:checked::after {
+  transform: translateX(20px);
 }
 
 input[type="text"],
 input[type="number"] {
-  background-color: transparent;
-  border: 1px solid var(--gray);
-  border-radius: 8px;
-  color: var(--text-light);
-  font: inherit;
-  height: 2rem;
+  background: oklch(100% 0 0 / 0.05);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--foreground);
+  font-family: inherit;
+  font-size: 0.875rem;
+  padding: 6px 10px;
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
+  width: 120px;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px oklch(from var(--accent) l c h / 0.2);
   outline: none;
-  padding: 4px 8px;
 }
 
 input[type="text"] {
-  width: 100%;
-}
-
-input[type="text"]:focus {
-  outline: 2px solid var(--toggle-accent);
-}
-
-input[type="number"] {
-  background-color: transparent;
-  border: 1px solid var(--gray);
-  border-radius: 8px;
-  color: var(--text-light);
-  font: inherit;
-  height: 2rem;
-  outline: none;
-  padding: 4px 8px;
+  width: 160px;
 }
 
 .actions {
   display: flex;
-  justify-content: space-between;
-  margin-top: 0.25rem;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 .btn {
-  background-color: var(--button-bg);
-  border: 1px solid var(--button-border);
   border-radius: 8px;
-  color: var(--white);
+  border: none;
   cursor: pointer;
+  flex: 1;
   font-family: inherit;
   font-size: 0.875rem;
   font-weight: 600;
-  height: 2.25rem;
-  padding: 0.5rem 0.75rem;
-  transition: background-color var(--transition);
+  padding: 0.75rem;
+  transition:
+    transform 100ms active,
+    opacity var(--transition);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--foreground);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--foreground);
 }
 
 .btn:hover {
-  background-color: var(--button-bg-hover);
+  opacity: 0.9;
+}
+
+.btn:active {
+  transform: scale(0.98);
 }

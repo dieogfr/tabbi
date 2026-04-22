@@ -1,39 +1,35 @@
 export const applyUISettings = (settings, container) => {
-  document.body.style.setProperty("--items-per-column", settings.itemsPerColumn);
-  updateBoxSize(settings.itemsPerColumn);
+  document.body.style.setProperty(
+    "--items-per-column",
+    settings.itemsPerColumn,
+  );
 
-  if (
-    settings.background.startsWith("#") ||
-    settings.background.startsWith("rgb") ||
-    settings.background.startsWith("oklch")
-  ) {
-    document.body.style.backgroundColor = settings.background;
-  } else {
-    document.body.style.backgroundImage = `url(${settings.background})`;
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundPosition = "center";
-    document.body.style.backgroundRepeat = "no-repeat";
+  if (settings.background) {
+    if (
+      settings.background.startsWith("#") ||
+      settings.background.startsWith("rgb") ||
+      settings.background.startsWith("oklch")
+    ) {
+      document.body.style.backgroundColor = settings.background;
+      document.body.style.backgroundImage = "none";
+    } else {
+      document.body.style.backgroundImage = `url(${settings.background})`;
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundPosition = "center";
+    }
   }
 
   container.setAttribute("data-compact", settings.compact);
-  document.body.setAttribute("data-blur", settings.backgroundBlur);
 };
 
-export const updateBoxSize = (itemsPerColumn) => {
-  const boxSize =
-    (window.innerWidth - 32) / itemsPerColumn > 200
-      ? "200px"
-      : `clamp(120px, calc((100vw - 32px - var(--grid-gap) * (${itemsPerColumn} - 1)) / ${itemsPerColumn}), 200px)`;
-
-  document.body.style.setProperty("--box-size", boxSize);
-};
-
-export const renderBookmarks = (nodes, container, folderName, showBackground, showIcons) => {
+export const renderBookmarks = (
+  nodes,
+  container,
+  folderName,
+  showBackground,
+  showIcons,
+) => {
   if (!nodes?.length) return;
-
-  const folderDiv = document.createElement("div");
-  folderDiv.setAttribute("data-folder", folderName);
-  folderDiv.className = "grid";
 
   const fragment = document.createDocumentFragment();
   nodes.forEach((node) => {
@@ -43,8 +39,7 @@ export const renderBookmarks = (nodes, container, folderName, showBackground, sh
     }
   });
 
-  folderDiv.appendChild(fragment);
-  container.appendChild(folderDiv);
+  container.appendChild(fragment);
 };
 
 const createBookmarkLink = (bookmark, showBackground, showIcons) => {
@@ -53,60 +48,46 @@ const createBookmarkLink = (bookmark, showBackground, showIcons) => {
   const link = document.createElement("a");
   link.href = bookmark.url;
   link.className = "box";
+  link.title = bookmark.title || bookmark.url;
 
-  let url, hostname, safeTitle, faviconUrl;
+  let hostname, faviconUrl;
   try {
-    url = new URL(bookmark.url);
+    const url = new URL(bookmark.url);
     hostname = url.hostname;
-    safeTitle = bookmark.title || hostname;
-    faviconUrl =
-      showIcons || showBackground
-        ? `https://www.google.com/s2/favicons?domain=${hostname}&sz=256`
-        : null;
-    // from what i've noticed, 256w is the only option with decent icons
+    faviconUrl = `https://www.google.com/s2/favicons?domain=${hostname}&sz=256`;
   } catch {
-    safeTitle = bookmark.title || bookmark.url;
     faviconUrl = null;
   }
 
   if (showBackground && faviconUrl) {
-    const bgDiv = document.createElement("div");
-    bgDiv.className = "background";
-
-    const bgImg = document.createElement("img");
-    bgImg.src = faviconUrl;
-    bgImg.loading = "lazy";
-    bgImg.className = "background-image";
-    bgImg.alt = "";
-
-    bgDiv.appendChild(bgImg);
-    link.appendChild(bgDiv);
+    const bg = document.createElement("img");
+    bg.src = faviconUrl;
+    bg.className = "box-background";
+    bg.alt = "";
+    link.appendChild(bg);
   }
-
-  const header = document.createElement("div");
-  header.className = "header";
 
   if (showIcons && faviconUrl) {
     const icon = document.createElement("img");
     icon.src = faviconUrl;
-    icon.alt = `${safeTitle} icon`;
-    icon.className = "icon";
-    icon.loading = "lazy";
-    header.appendChild(icon);
+    icon.className = "box-icon";
+    icon.alt = "";
+    link.appendChild(icon);
   }
 
-  const title = document.createElement("div");
-  title.className = "title";
-  title.textContent = safeTitle;
-  header.appendChild(title);
+  const title = document.createElement("span");
+  title.className = "box-title";
+  title.textContent = bookmark.title || hostname || bookmark.url;
+  link.appendChild(title);
 
-  link.appendChild(header);
   return link;
 };
 
 export const displayNoBookmarksMessage = (container, folderName) => {
-  const message = document.createElement("p");
-  message.className = "no-bookmarks";
-  message.textContent = `Create a bookmarks folder named "${folderName}" and start saving your links in it!`;
-  container.appendChild(message);
+  container.innerHTML = `
+    <div class="no-bookmarks">
+      <h2>Welcome to tabbi</h2>
+      <p>Create a bookmarks folder named "<strong>${folderName}</strong>" to see your links here.</p>
+    </div>
+  `;
 };
