@@ -100,7 +100,7 @@ main::-webkit-scrollbar {
 }
 
 .box::before {
-  backdrop-filter: blur(24px);
+  backdrop-filter: blur(10px);
   border-radius: inherit;
   border: 1px solid oklch(100% 0 0 / 0.1);
   content: "";
