@@ -12,8 +12,8 @@
     "newtab": "newtab.html"
   },
   "icons": {
-    "32": "images/icons/32w.png",
-    "180": "images/icons/180w.png",
-    "512": "images/icons/512w.png"
+    "32": "images/icons/32.png",
+    "180": "images/icons/180.png",
+    "512": "images/icons/512.png"
   }
 }
