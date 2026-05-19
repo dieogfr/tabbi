@@ -4,7 +4,8 @@
   "version": "1.0",
   "description": "A minimal new tab with your chosen bookmarks. Clean and simple.",
   "author": "dieogfr",
-  "permissions": ["bookmarks", "storage"],
+  "permissions": ["bookmarks", "storage", "unlimitedStorage"],
+  "host_permissions": ["https://*.google.com/", "https://*.gstatic.com/"],
   "action": {
     "default_popup": "options.html"
   },

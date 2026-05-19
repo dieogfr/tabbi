@@ -49,7 +49,7 @@ const loadBookmarks = async (container, settings) => {
   const groupedBookmarks = groupBookmarks(targetFolder.children);
 
   if (groupedBookmarks._parent) {
-    renderBookmarks(
+    await renderBookmarks(
       groupedBookmarks._parent,
       container,
       folderName,
@@ -58,9 +58,10 @@ const loadBookmarks = async (container, settings) => {
     );
   }
 
-  Object.entries(groupedBookmarks).forEach(([groupName, bookmarkItems]) => {
+  const entries = Object.entries(groupedBookmarks);
+  for (const [groupName, bookmarkItems] of entries) {
     if (groupName !== "_parent") {
-      renderBookmarks(
+      await renderBookmarks(
         bookmarkItems,
         container,
         groupName,
@@ -68,7 +69,7 @@ const loadBookmarks = async (container, settings) => {
         settings.showIcons,
       );
     }
-  });
+  }
 };
 
 const updateDatetime = () => {
@@ -102,7 +103,6 @@ const updateSystemInfo = () => {
   const infoContainer = document.getElementById("system-info");
   const platform = getPlatformInfo();
   const browser = getBrowserInfo();
-  console.log(navigator);
 
   infoContainer.innerHTML = `
     <span>${platform}</span>

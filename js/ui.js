@@ -22,7 +22,7 @@ export const applyUISettings = (settings, container) => {
   container.setAttribute("data-compact", settings.compact);
 };
 
-export const renderBookmarks = (
+export const renderBookmarks = async (
   nodes,
   container,
   folderName,
@@ -32,17 +32,83 @@ export const renderBookmarks = (
   if (!nodes?.length) return;
 
   const fragment = document.createDocumentFragment();
-  nodes.forEach((node) => {
-    if (node.url) {
-      const bookmarkLink = createBookmarkLink(node, showBackground, showIcons);
-      if (bookmarkLink) fragment.appendChild(bookmarkLink);
-    }
+
+  const linkPromises = nodes.map((node) => {
+    if (node.url) return createBookmarkLink(node, showBackground, showIcons);
+
+    return Promise.resolve(null);
+  });
+
+  const links = await Promise.all(linkPromises);
+
+  links.forEach((link) => {
+    if (link) fragment.appendChild(link);
   });
 
   container.appendChild(fragment);
 };
 
-const createBookmarkLink = (bookmark, showBackground, showIcons) => {
+const pendingFetches = new Map();
+
+const getFavicon = async (hostname) => {
+  const url = `https://www.google.com/s2/favicons?domain=${hostname}&sz=256`;
+  const cacheKey = `favicon-${hostname}`;
+
+  return new Promise((resolve) => {
+    chrome.storage.local.get([cacheKey], async (result) => {
+      if (result[cacheKey]) {
+        console.log(
+          `%c[Cache] %c${hostname}`,
+          "color: lime; font-weight: bold",
+          "color: inherit",
+        );
+        resolve(result[cacheKey]);
+        return;
+      } else {
+        console.log(
+          `%c[Network] %c${hostname}`,
+          "color: orange; font-weight: bold",
+          "color: inherit",
+        );
+      }
+
+      if (pendingFetches.has(hostname)) {
+        resolve(await pendingFetches.get(hostname));
+        return;
+      }
+
+      const fetchPromise = (async () => {
+        try {
+          const response = await fetch(url);
+          const blob = await response.blob();
+          return new Promise((res) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const base64data = reader.result;
+              try {
+                chrome.storage.local.set({ [cacheKey]: base64data });
+              } catch (e) {
+                console.warn("Storage error saving favicon:", e);
+              }
+              res(base64data);
+            };
+            reader.readAsDataURL(blob);
+          });
+        } catch (error) {
+          console.error("Error fetching favicon:", error);
+          return url;
+        }
+      })();
+
+      pendingFetches.set(hostname, fetchPromise);
+      const data = await fetchPromise;
+      pendingFetches.delete(hostname);
+      resolve(data);
+    });
+  });
+};
+
+const createBookmarkLink = async (bookmark, showBackground, showIcons) => {
   if (!bookmark?.url) return null;
 
   const link = document.createElement("a");
@@ -54,7 +120,7 @@ const createBookmarkLink = (bookmark, showBackground, showIcons) => {
   try {
     const url = new URL(bookmark.url);
     hostname = url.hostname;
-    faviconUrl = `https://www.google.com/s2/favicons?domain=${hostname}&sz=256`;
+    faviconUrl = await getFavicon(hostname);
   } catch {
     faviconUrl = null;
   }
